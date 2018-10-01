@@ -14,7 +14,7 @@ aiohttp_jinja2.setup(app,
 
 async def main(request):
     context = {}
-    tpl = aiohttp_jinja2.render_template('tmpl.html', request, context)
+    tpl = aiohttp_jinja2.render_template('index.html', request, context)
     return tpl
 
 async def send_mail(data):
