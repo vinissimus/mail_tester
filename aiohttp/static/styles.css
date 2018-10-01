@@ -1,0 +1,34 @@
+body {
+
+}
+.container {
+  margin-left: 5%;
+  margin-right: 5%;
+  color: #800000;
+  border: 2px dotted #800000;
+  height: 1000px;
+}
+form {
+  height: 250px
+}
+h1 {
+  margin-left: 40%;
+}
+label {
+  display: inline-block;
+  width: 140px;
+  text-align: right;
+  margin-left: 10%;
+  margin-right: 5%;
+  margin-bottom: 10px
+}
+input{
+  width: 300px;
+}
+button {
+    margin-top: 10px;
+    margin-left: 84%
+}
+textarea {
+  margin-left: 15%
+}

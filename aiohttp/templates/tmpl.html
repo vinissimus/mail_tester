@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Email</title>
+    <style media="screen">
+    .container {
+      margin-left: 5%;
+      margin-right: 5%;
+      color: #800000;
+      border: 2px dotted #800000;
+      height: 1000px;
+    }
+    form {
+      height: 250px
+    }
+    h1 {
+      margin-left: 40%;
+    }
+    label {
+      display: inline-block;
+      width: 140px;
+      text-align: right;
+      margin-left: 10%;
+      margin-right: 5%;
+      margin-bottom: 10px
+    }
+    input{
+      width: 300px;
+    }
+    button {
+        margin-top: 10px;
+        margin-left: 84%
+    }
+    textarea {
+      margin-left: 15%
+    }
+    </style>
+
+</head>
+<body>
+  <div class="container">
+    <h1>Send mail</h1>
+    <form action="/send_mail" method="post">
+      <label>Email:</label> <input type="email" name="id_mail"><br>
+      <label>Subject:</label> <input type="text" name="id_subject"><button type="submit" name="button">Send</button><br>
+      <label>Content:</label> <br><textarea name="id_content" rows="50" cols="100"></textarea><br>
+    </form>
+  </div>
+
+
+</body>
+</html>
