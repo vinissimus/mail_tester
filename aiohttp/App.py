@@ -46,16 +46,16 @@ async def send_mail(data):
 async def mail(request):
     enviable = True
 
-    #Comprovar dades
+    #Check data
     data = await request.post()
     if (data['id_mail'] == "" or data['id_subject'] == "" or data['id_content'] == ""):
         enviable = False
 
-    #Enviar email
+    #Send e_mail
     if (enviable):
         await send_mail(data)
 
-    #Carregar template en funció del resultat
+    #Load the template
     if (enviable):
         tpl = aiohttp_jinja2.render_template('mail_sent.html', request, data)
     else:
