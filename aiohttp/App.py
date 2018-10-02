@@ -5,6 +5,8 @@ import asyncio
 import aiohttp_jinja2
 import jinja2
 import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 
 app = web.Application()
@@ -18,20 +20,27 @@ async def main(request):
     return tpl
 
 async def send_mail(data):
-
     sender = os.getenv('SMTP_USER')
     password = os.getenv('SMTP_PW') # Your SMTP password for Gmail
-
     recipient = data['id_mail']
-    subject = data['id_subject']
-    text = data['id_content']
+
+    msg = MIMEMultipart()
+    msg['Subject'] = data['id_subject']
+    msg['From'] = sender
+    msg['To'] = recipient
+
+    html = data['id_content']
+
+    part = MIMEText(html, 'html')
+
+    msg.attach(part)
 
     smtp_server = smtplib.SMTP("smtp.office365.com", 587)
     smtp_server.starttls()
     smtp_server.login(sender, password)
-    message = "Subject: {}\n\n{}".format(subject, text)
-    print(message)
-    smtp_server.sendmail(sender, recipient, message)
+
+
+    smtp_server.sendmail(sender, recipient, msg.as_string())
     smtp_server.close()
 
 async def mail(request):
