@@ -1,4 +1,4 @@
 #!/bin/bash
 
 echo "Arrancant servei de prova de Newsletter"
-docker run -it -p 8080:8080 -e SMTP_USER=$1 -e SMTP_PW=$2 newsletter_sender
+docker run -it -p 8080:8080 -e SMTP_USER=$1 -e SMTP_PW=$2 -e SMTP_HOST=$3 -e SMTP_PORT=$4 mail_tester

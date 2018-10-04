@@ -21,13 +21,13 @@ async def main(request):
 
 async def send_mail(data):
     sender = os.getenv('SMTP_USER')
-    password = os.getenv('SMTP_PW') # Your SMTP password for Gmail
-    recipient = data['id_mail']
+    password = os.getenv('SMTP_PW')
+    recipient = data['id_mail'].split(' ')
 
     msg = MIMEMultipart()
     msg['Subject'] = data['id_subject']
     msg['From'] = sender
-    msg['To'] = recipient
+    msg['To'] = ', '.join(recipient)
 
     html = data['id_content']
 
@@ -35,7 +35,9 @@ async def send_mail(data):
 
     msg.attach(part)
 
-    smtp_server = smtplib.SMTP("smtp.office365.com", 587)
+    host = os.getenv('SMTP_HOST')
+    port = os.getenv('SMTP_PORT')
+    smtp_server = smtplib.SMTP(host, port)
     smtp_server.starttls()
     smtp_server.login(sender, password)
 
@@ -44,26 +46,16 @@ async def send_mail(data):
     smtp_server.close()
 
 async def mail(request):
-    enviable = True
 
-    #Check data
     data = await request.post()
-    if (data['id_mail'] == "" or data['id_subject'] == "" or data['id_content'] == ""):
-        enviable = False
+    if (data['id_mail'] == "" or data['id_subject'] == "" or
+        data['id_content'] == ""):
+        return  web.Response(text="Missing data", status=422);
 
-    #Send e_mail
-    if (enviable):
-        await send_mail(data)
+    await send_mail(data)
 
-    #Load the template
-    if (enviable):
-        tpl = aiohttp_jinja2.render_template('mail_sent.html', request, data)
-    else:
-        tpl = aiohttp_jinja2.render_template('wrong_data.html', request, data)
+    return web.Response(text="Email sent", status=200);
 
-
-
-    return tpl
 
 app.router.add_get('/', main)
 app.router.add_post('/send_mail', mail)
