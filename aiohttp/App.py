@@ -11,13 +11,14 @@ from email.mime.text import MIMEText
 
 app = web.Application()
 
-aiohttp_jinja2.setup(app,
-    loader=jinja2.FileSystemLoader('templates'))
+aiohttp_jinja2.setup(app, loader=jinja2.FileSystemLoader('templates'))
+
 
 async def main(request):
     context = {}
     tpl = aiohttp_jinja2.render_template('index.html', request, context)
     return tpl
+
 
 async def send_mail(data):
     sender = os.getenv('SMTP_USER')
@@ -41,20 +42,20 @@ async def send_mail(data):
     smtp_server.starttls()
     smtp_server.login(sender, password)
 
-
     smtp_server.sendmail(sender, recipient, msg.as_string())
     smtp_server.close()
+
 
 async def mail(request):
 
     data = await request.post()
     if (data['id_mail'] == "" or data['id_subject'] == "" or
-        data['id_content'] == ""):
-        return  web.Response(text="Missing data", status=422);
+            data['id_content'] == ""):
+        return web.Response(text="Missing data", status=422)
 
     await send_mail(data)
 
-    return web.Response(text="Email sent", status=200);
+    return web.Response(text="Email sent", status=200)
 
 
 app.router.add_get('/', main)

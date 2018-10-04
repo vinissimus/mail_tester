@@ -15,7 +15,7 @@ It serves to send an email rendered in html.
 
 ### Run the container
   - "$ ./run {user} {password} {host} {port}"
-  E.G.: ./run myuser mypassword smtp.office365.com 587 
+  - E.G.: ./run myuser mypassword smtp.office365.com 587 
 
 ## How to use it
   1. Go to localhost:8080
